@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+post-deploy-script() {
+    local APP="$1"; verify_app_name "$APP"
+    local SCRIPT_PATH="$DOKKU_ROOT/$APP/POST_DEPLOY_SCRIPT"
+
+    dokku_log_info1 "Checking for post deploy script..."
+
+    # No script found abort
+    if [[ ! -f "$SCRIPT_PATH" ]]; then
+        dokku_log_info1 "No post deploy script found."
+        return 1
+    fi
+
+    dokku_log_info1 "Executing post deploy script..."
+    local OUTPUT=$(source "$SCRIPT_PATH")
+    dokku_log_verbose_quiet "$OUTPUT"
+}
+
+post-deploy-script "$@"

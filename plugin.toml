@@ -1,0 +1,4 @@
+[plugin]
+description="Dokku plugin to execute script on dokku host after a deploy"
+version="0.0.1"
+[plugin.config]
