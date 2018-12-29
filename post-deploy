@@ -11,7 +11,7 @@ post-deploy-script() {
     # No script found abort
     if [[ ! -f "$SCRIPT_PATH" ]]; then
         dokku_log_info1 "No post deploy script found."
-        return 1
+        return 0
     fi
 
     dokku_log_info1 "Executing post deploy script..."
